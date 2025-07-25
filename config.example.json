@@ -1,0 +1,26 @@
+{
+  "projectKnowledge": {
+    "database": "Your database connection details here",
+    "framework": "Your framework stack (e.g., Express, FastAPI, Django)",
+    "auth": "Your authentication system (e.g., JWT, OAuth, Session-based)",
+    "deployment": "Your deployment platform (e.g., AWS, Vercel, Railway)",
+    "key_endpoints": [
+      "/api/example - Description of endpoint",
+      "/api/auth - Authentication endpoints",
+      "/api/users - User management"
+    ],
+    "architecture": {
+      "frontend": "Your frontend stack",
+      "backend": "Your backend stack",
+      "database": "Your database and ORM"
+    },
+    "common_issues": {
+      "issue_name": "Description and solution",
+      "another_issue": "How to debug and fix"
+    },
+    "custom_knowledge": {
+      "description": "Add any custom categories here",
+      "example": "The tool will detect keywords and inject this knowledge"
+    }
+  }
+}

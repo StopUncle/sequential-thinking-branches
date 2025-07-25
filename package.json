@@ -1,0 +1,62 @@
+{
+  "name": "@autonomousempire/sequential-thinking-enhanced",
+  "version": "1.0.0",
+  "description": "Enhanced MCP server for sequential thinking with branching capabilities, self-reinforcing output, and session persistence",
+  "keywords": [
+    "mcp",
+    "claude",
+    "sequential-thinking",
+    "debugging",
+    "branching",
+    "ai-tools",
+    "model-context-protocol"
+  ],
+  "homepage": "https://github.com/StopUncleTonyFromComing/sequential-thinking-branches#readme",
+  "bugs": {
+    "url": "https://github.com/StopUncleTonyFromComing/sequential-thinking-branches/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StopUncleTonyFromComing/sequential-thinking-branches.git"
+  },
+  "license": "MIT",
+  "author": "AutonomousEmpire",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js",
+    "test:unit": "node test-unit.js",
+    "test:interactive": "node test-interactive.js",
+    "test:server": "node test-server.js",
+    "validate": "node validate.js",
+    "troubleshoot": "node troubleshoot.js",
+    "setup": "node setup.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.5.0",
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "index.js",
+    "preflight-check.js",
+    "validate.js",
+    "troubleshoot.js",
+    "test*.js",
+    "setup.js",
+    "config.example.json",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "QUICKSTART.md",
+    "DEMO.md",
+    "TESTING.md"
+  ]
+}
