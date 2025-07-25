@@ -26,7 +26,10 @@ const __dirname = dirname(__filename);
 
 test('index.js exists', existsSync(join(__dirname, 'index.js')));
 test('package.json exists', existsSync(join(__dirname, 'package.json')));
-test('config.json exists', existsSync(join(__dirname, 'config.json')));
+// Check for config.json or config.example.json
+const configExists = existsSync(join(__dirname, 'config.json'));
+const configExampleExists = existsSync(join(__dirname, 'config.example.json'));
+test('config.json or config.example.json exists', configExists || configExampleExists);
 test('README.md exists', existsSync(join(__dirname, 'README.md')));
 
 // Test 2: Check package.json is valid
@@ -42,14 +45,25 @@ try {
   test('package.json is valid JSON', false);
 }
 
-// Test 3: Check config.json is valid
+// Test 3: Check config is valid
 import { readFileSync } from 'fs';
 try {
-  const config = JSON.parse(readFileSync(join(__dirname, 'config.json'), 'utf-8'));
-  test('config.json is valid JSON', true);
-  test('config.json has projectKnowledge', !!config.projectKnowledge);
+  // Try config.json first, fall back to config.example.json
+  const configPath = existsSync(join(__dirname, 'config.json')) 
+    ? join(__dirname, 'config.json')
+    : join(__dirname, 'config.example.json');
+  
+  if (existsSync(configPath)) {
+    const config = JSON.parse(readFileSync(configPath, 'utf-8'));
+    test('config file is valid JSON', true);
+    test('config file has projectKnowledge', !!config.projectKnowledge);
+  } else {
+    test('config file is valid JSON', false);
+    test('config file has projectKnowledge', false);
+  }
 } catch (e) {
-  test('config.json is valid JSON', false);
+  test('config file is valid JSON', false);
+  test('config file has projectKnowledge', false);
 }
 
 // Test 4: Check if the server can be imported
