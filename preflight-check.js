@@ -32,7 +32,10 @@ function check(name, condition, fix) {
 console.log(chalk.yellow('\n📁 Checking files:'));
 check('index.js exists', existsSync(join(__dirname, 'index.js')));
 check('package.json exists', existsSync(join(__dirname, 'package.json')));
-check('config.json exists', existsSync(join(__dirname, 'config.json')));
+const configExists = existsSync(join(__dirname, 'config.json'));
+const configExampleExists = existsSync(join(__dirname, 'config.example.json'));
+check('config.json or config.example.json exists', configExists || configExampleExists, 
+  configExists ? null : 'Copy config.example.json to config.json');
 
 // Check 2: Dependencies installed
 console.log(chalk.yellow('\n📦 Checking dependencies:'));
@@ -47,12 +50,20 @@ check('chalk installed',
 // Check 3: Configuration
 console.log(chalk.yellow('\n⚙️  Checking configuration:'));
 try {
-  const config = JSON.parse(readFileSync(join(__dirname, 'config.json'), 'utf-8'));
-  check('config.json is valid JSON', true);
-  check('projectKnowledge exists', !!config.projectKnowledge);
-  check('database configured', !!config.projectKnowledge?.database);
+  const configPath = existsSync(join(__dirname, 'config.json')) 
+    ? join(__dirname, 'config.json')
+    : join(__dirname, 'config.example.json');
+  
+  if (existsSync(configPath)) {
+    const config = JSON.parse(readFileSync(configPath, 'utf-8'));
+    check('config file is valid JSON', true);
+    check('projectKnowledge exists', !!config.projectKnowledge);
+    check('database configured', !!config.projectKnowledge?.database);
+  } else {
+    check('config file is valid JSON', false, 'No config file found');
+  }
 } catch (e) {
-  check('config.json is valid JSON', false, 'Check JSON syntax');
+  check('config file is valid JSON', false, 'Check JSON syntax');
 }
 
 // Check 4: Node.js version

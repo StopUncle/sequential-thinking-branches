@@ -103,33 +103,39 @@ const issues = {
   'Project knowledge not showing': {
     checks: [
       {
-        name: 'config.json exists',
-        test: () => existsSync(join(__dirname, 'config.json')),
-        fix: 'Create config.json file'
+        name: 'config.json or config.example.json exists',
+        test: () => existsSync(join(__dirname, 'config.json')) || existsSync(join(__dirname, 'config.example.json')),
+        fix: 'Create config.json from config.example.json'
       },
       {
         name: 'Valid JSON',
         test: () => {
           try {
-            JSON.parse(readFileSync(join(__dirname, 'config.json'), 'utf-8'));
+            const configPath = existsSync(join(__dirname, 'config.json')) 
+              ? join(__dirname, 'config.json')
+              : join(__dirname, 'config.example.json');
+            JSON.parse(readFileSync(configPath, 'utf-8'));
             return true;
           } catch (e) {
             return false;
           }
         },
-        fix: 'Fix JSON syntax in config.json'
+        fix: 'Fix JSON syntax in config file'
       },
       {
         name: 'projectKnowledge configured',
         test: () => {
           try {
-            const config = JSON.parse(readFileSync(join(__dirname, 'config.json'), 'utf-8'));
+            const configPath = existsSync(join(__dirname, 'config.json')) 
+              ? join(__dirname, 'config.json')
+              : join(__dirname, 'config.example.json');
+            const config = JSON.parse(readFileSync(configPath, 'utf-8'));
             return !!config.projectKnowledge;
           } catch (e) {
             return false;
           }
         },
-        fix: 'Add projectKnowledge section to config.json'
+        fix: 'Add projectKnowledge section to config file'
       }
     ]
   }
